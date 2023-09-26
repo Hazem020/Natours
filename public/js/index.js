@@ -29,7 +29,6 @@ if (userDataForm)
     form.append('email', document.getElementById('email').value);
     form.append('photo', document.getElementById('photo').files[0]);
     updateSettings(form, 'data');
-    console.log('done1');
   });
 
 if (userPasswordForm)
@@ -44,7 +43,6 @@ if (userPasswordForm)
       { passwordCurrent, password, passwordConfirm },
       'password'
     );
-    console.log('done');
     document.querySelector('.btn--save-password').textContent = 'Save password';
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';

@@ -6,7 +6,6 @@ const stripe = Stripe(
 );
 
 export const bookTour = async (tourId) => {
-  console.log('done');
   try {
     // 1) Get checkout session from API
     const session = await axios(`/api/v1/bookings/checkout-session/${tourId}`);

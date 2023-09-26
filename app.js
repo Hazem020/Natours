@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const mongoSanitze = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -58,6 +59,10 @@ app.use(
     ],
   })
 );
+
+
+
+app.use(compression);
 
 //read data from body into req.body
 app.use(express.json({ limit: '10kb' }));

@@ -7,7 +7,7 @@ const Review = require('../../models/reviewModel');
 
 dotenv.config({ path: './config.env' });
 
-mongoose.connect(process.env.DATABASE_LOCAL).then(() => {
+mongoose.connect(process.env.DATABASE).then(() => {
   console.log('DB connection successful!');
 });
 
