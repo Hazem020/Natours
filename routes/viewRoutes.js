@@ -18,7 +18,11 @@ viewRouter.get(
   viewController.getLoginForm
 );
 viewRouter.get('/me', authController.auth, viewController.getAccount);
-viewRouter.get('/signup', (req, res) => res.status(200).render('signup.pug'));
+viewRouter.get(
+  '/signup',
+  authController.isLoggedIn,
+  viewController.getSignupForm
+);
 viewRouter.get(
   '/my-tours',
   authController.auth,
