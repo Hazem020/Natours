@@ -60,8 +60,6 @@ app.use(
   })
 );
 
-
-
 app.use(compression);
 
 //read data from body into req.body
