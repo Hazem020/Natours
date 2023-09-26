@@ -52,7 +52,6 @@ const createBooking = async (session) => {
   const price = session.amount_total / 100;
   if (!tour && !user && !price) return next();
   await Booking.create({ tour, user, price });
-  res.redirect(req.originalUrl.split('?')[0]);
 };
 
 exports.webhookCheckout = async (req, res, next) => {
