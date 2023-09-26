@@ -68,9 +68,9 @@ app.use(
 //     return false;
 //   }
 
-  // fallback to standard filter function
-  return compression.filter(req, res);
-}
+//   // fallback to standard filter function
+//   return compression.filter(req, res);
+// }
 
 //read data from body into req.body
 app.use(express.json({ limit: '10kb' }));
