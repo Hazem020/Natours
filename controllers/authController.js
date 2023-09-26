@@ -57,32 +57,6 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 // middleware to protect routes
-exports.auth = catchAsync(async (req, res, next) => {
-  let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1];
-  } else if (req.cookies.jwt) {
-    token = req.cookies.jwt;
-  }
-  if (!token) return next(new AppError('You are not logged in', 401));
-  // 2) Verification token
-  const decoded = jwt.verify(token, process.env.JWT_KEY);
-  // 3) Check if user still exists
-  const user = await User.findById(decoded.id);
-  if (!user) return next(new AppError('The user no longer exists', 401));
-  // 4) Check if user changed password after the token was issued
-  if (user.changedPasswordAfter(decoded.iat))
-    return next(
-      new AppError('User recently changed password! Please log in again', 401)
-    );
-  // GRANT ACCESS TO PROTECTED ROUTE
-  req.user = user;
-  res.locals.user = user;
-  next();
-});
 
 exports.restrictTo =
   (...roles) =>
@@ -148,6 +122,35 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
   createAndSendToken(user, 200, res);
+});
+
+exports.auth = catchAsync(async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+  console.log(req.headers);
+  console.log(token);
+  if (!token) return next(new AppError('You are not logged in', 401));
+  // 2) Verification token
+  const decoded = jwt.verify(token, process.env.JWT_KEY);
+  // 3) Check if user still exists
+  const user = await User.findById(decoded.id);
+  if (!user) return next(new AppError('The user no longer exists', 401));
+  // 4) Check if user changed password after the token was issued
+  if (user.changedPasswordAfter(decoded.iat))
+    return next(
+      new AppError('User recently changed password! Please log in again', 401)
+    );
+  // GRANT ACCESS TO PROTECTED ROUTE
+  req.user = user;
+  res.locals.user = user;
+  next();
 });
 
 exports.isLoggedIn = catchAsync(async (req, res, next) => {
