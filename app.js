@@ -18,8 +18,8 @@ const globalErrorHandler = require('./controllers/errorController');
 const bookingRouter = require('./routes/bookingRoutes');
 const app = express();
 
-app.get('/ip', (request, response) => response.send(request.ip));
 app.enable('trust proxy', 1);
+app.get('/ip', (request, response) => response.send(request.ip));
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
