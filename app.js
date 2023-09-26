@@ -18,7 +18,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const bookingRouter = require('./routes/bookingRoutes');
 const app = express();
 
-app.enable('trust proxy', 1);
+app.enable('trust proxy', 2);
 app.get('/ip', (request, response) => response.send(request.ip));
 app.get('/x-forwarded-for', (request, response) =>
   response.send(request.headers['x-forwarded-for'])
