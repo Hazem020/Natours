@@ -9,7 +9,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the currently booked tour
   const tour = await Tour.findById(req.params.tourId);
   const booking = await Booking.find({ user: req.user.id, tour: tour.id });
-  if (booking) {
+  if (booking.length > 0) {
     return next(new AppError('You have already booked this tour', 400));
   }
   // 2) Create checkout session
