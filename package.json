@@ -11,7 +11,7 @@
     "start": "node server.js",
     "dev": "set NODE_ENV=development&nodemon server.js",
     "watch:js": "parcel watch public/js/index.js --out-dir public/js --out-file bundle.js --public-url .",
-    "build:js": "parcel build public/js/index.js --out-dir public/js --out-file bundle.js"
+    "build:js": "parcel build public/js/index.js --out-dir public/js --out-file bundle.js --public-url ."
   },
   "author": "Hazem",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "bootstrap": "^5.3.2",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "eslint": "^8.43.0",
     "eslint-config-airbnb": "^19.0.4",
