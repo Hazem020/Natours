@@ -5,7 +5,7 @@ const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
 const Email = require('../utils/email');
 
-const createAndSendToken = (user, code, res) => {
+const createAndSendToken = (user, code, req, res) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_KEY, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
@@ -39,7 +39,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     newUser,
     `${req.protocol}://${req.get('host')}//me`
   ).sendWelcome();
-  createAndSendToken(newUser, 201, res);
+  createAndSendToken(newUser, 201, req, res);
 });
 
 // function to login user
@@ -54,7 +54,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const correct = await user.checkPassword(password, user.password);
   if (!correct) return next(new AppError('Incorrect email or password', 401));
   // 3) If everything ok, send token to client
-  createAndSendToken(user, 200, res);
+  createAndSendToken(user, 200, req, res);
 });
 
 // middleware to protect routes
