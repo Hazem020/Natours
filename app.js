@@ -13,6 +13,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const bookingController = require('./controllers/bookingController');
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
 const bookingRouter = require('./routes/bookingRoutes');
@@ -81,6 +82,12 @@ app.use(
 // }
 
 //read data from body into req.body
+
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 app.use(express.json({ limit: '10kb' }));
 
 app.use((req, res, next) => {

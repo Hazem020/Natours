@@ -23,12 +23,7 @@ viewRouter.get(
   authController.isLoggedIn,
   viewController.getSignupForm
 );
-viewRouter.get(
-  '/my-tours',
-  authController.auth,
-  bookingController.createBookingCheckout,
-  viewController.getMyTours
-);
+viewRouter.get('/my-tours', authController.auth, viewController.getMyTours);
 viewRouter.post(
   '/submit-user-data',
   authController.auth,
