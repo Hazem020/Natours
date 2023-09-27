@@ -3,9 +3,14 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
 const factory = require('./handlerFactory');
 const Booking = require('../models/bookingModel');
+const Tour = require('../models/tourModel');
 
 // FUNCTION TO RESTRICT USER FROM REVIEWING A TOUR THEY HAVE NOT BOOKED
 exports.restrictUser = async (req, res, next) => {
+  if (req.body.slug) {
+    req.body.tour = (await Tour.findOne({ slug: req.body.slug })).id;
+    req.body.slug = undefined;
+  }
   const tourID = req.params.tourID || req.body.tour;
   const userID = req.user.id || req.body.user;
   if (!tourID || !userID) {
@@ -26,6 +31,7 @@ exports.restrictUser = async (req, res, next) => {
 exports.addReview = catchAsync(async (req, res) => {
   if (!req.body.tour) req.body.tour = req.params.tourID;
   if (!req.body.user) req.body.user = req.user.id;
+
   try {
     const newReview = await Review.create(req.body);
     res.status(201).json({ status: 'success', data: { review: newReview } });
