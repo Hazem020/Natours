@@ -4,6 +4,7 @@ import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { signup } from './signup';
+import { createReview } from './review';
 // DOM ELEMENTS
 const loginForm = document.querySelector('.form--login');
 const signupForm = document.querySelector('.form--signup');
@@ -11,6 +12,18 @@ const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
+const reviewForm = document.querySelector('.form--review');
+
+if (reviewForm)
+  reviewForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    document.querySelector('.submit--review').textContent = 'Submiting...';
+    const review = document.getElementById('review').value;
+    const rating = document.querySelector('input[name="rate"]:checked').value;
+    const slug = location.pathname.split('/').slice(1)[1];
+    await createReview(review, rating, slug);
+    document.querySelector('.submit--review').textContent = 'Submit Review';
+  });
 
 if (signupForm)
   signupForm.addEventListener('submit', (e) => {
